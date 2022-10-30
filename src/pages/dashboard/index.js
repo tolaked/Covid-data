@@ -4,7 +4,7 @@ import { useState } from 'react';
 import {
     Avatar,
     AvatarGroup,
-    Box,
+    // Box,
     Button,
     Grid,
     List,
@@ -20,7 +20,7 @@ import {
 
 // project import
 import OrdersTable from './OrdersTable';
-import IncomeAreaChart from './IncomeAreaChart';
+// import IncomeAreaChart from './IncomeAreaChart';
 import MonthlyBarChart from './MonthlyBarChart';
 import ReportAreaChart from './ReportAreaChart';
 import SalesColumnChart from './SalesColumnChart';
@@ -71,7 +71,7 @@ const status = [
 
 const DashboardDefault = () => {
     const [value, setValue] = useState('today');
-    const [slot, setSlot] = useState('week');
+    // const [slot, setSlot] = useState('week');
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
