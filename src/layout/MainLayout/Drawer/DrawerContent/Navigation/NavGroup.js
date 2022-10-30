@@ -39,7 +39,7 @@ const NavGroup = ({ item }) => {
                 drawerOpen && (
                     <Box sx={{ pl: 3, mb: 1.5 }}>
                         <Typography variant="subtitle2" color="textSecondary">
-                            {item.title}
+                            Dashboard
                         </Typography>
                         {/* only available in paid version */}
                     </Box>

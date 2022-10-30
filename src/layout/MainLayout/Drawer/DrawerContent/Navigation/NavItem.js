@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 
 // project import
 import { activeItem } from 'store/reducers/menu';
@@ -116,16 +116,15 @@ const NavItem = ({ item, level }) => {
                     {itemIcon}
                 </ListItemIcon>
             )}
-            {(drawerOpen || (!drawerOpen && level !== 1)) && (
+            
                 <ListItemText
                     primary={
                         <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor }}>
-                            {item.title}
+                            Dashboard
                         </Typography>
                     }
                 />
-            )}
-            {(drawerOpen || (!drawerOpen && level !== 1)) && item.chip && (
+            {/* {(drawerOpen || (!drawerOpen && level !== 1)) && item.chip && (
                 <Chip
                     color={item.chip.color}
                     variant={item.chip.variant}
@@ -133,7 +132,7 @@ const NavItem = ({ item, level }) => {
                     label={item.chip.label}
                     avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
                 />
-            )}
+            )} */}
         </ListItemButton>
     );
 };

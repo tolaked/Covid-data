@@ -4,19 +4,13 @@ import { useRef, useState } from 'react';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
-    Avatar,
     Box,
     ButtonBase,
-    CardContent,
     ClickAwayListener,
-    Grid,
-    IconButton,
     Paper,
     Popper,
-    Stack,
     Tab,
-    Tabs,
-    Typography
+    Tabs
 } from '@mui/material';
 
 // project import
@@ -25,9 +19,7 @@ import Transitions from 'components/@extended/Transitions';
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
 
-// assets
-import avatar1 from 'assets/images/users/avatar-1.png';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { SettingOutlined, UserOutlined } from '@ant-design/icons';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -96,10 +88,10 @@ const Profile = () => {
                 aria-haspopup="true"
                 onClick={handleToggle}
             >
-                <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
+                {/* <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
                     <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
                     <Typography variant="subtitle1">John Doe</Typography>
-                </Stack>
+                </Stack> */}
             </ButtonBase>
             <Popper
                 placement="bottom-end"
@@ -135,7 +127,7 @@ const Profile = () => {
                             >
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MainCard elevation={0} border={false} content={false}>
-                                        <CardContent sx={{ px: 2.5, pt: 3 }}>
+                                        {/* <CardContent sx={{ px: 2.5, pt: 3 }}>
                                             <Grid container justifyContent="space-between" alignItems="center">
                                                 <Grid item>
                                                     <Stack direction="row" spacing={1.25} alignItems="center">
@@ -154,7 +146,7 @@ const Profile = () => {
                                                     </IconButton>
                                                 </Grid>
                                             </Grid>
-                                        </CardContent>
+                                        </CardContent> */}
                                         {open && (
                                             <>
                                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

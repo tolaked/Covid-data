@@ -1,20 +1,18 @@
-import { useState } from 'react';
-
 // material-ui
 import {
-    Avatar,
-    AvatarGroup,
-    // Box,
-    Button,
+    // Avatar,
+    // AvatarGroup,
+    // // Box,
+    // Button,
     Grid,
-    List,
-    ListItemAvatar,
-    ListItemButton,
-    ListItemSecondaryAction,
-    ListItemText,
-    MenuItem,
-    Stack,
-    TextField,
+    // List,
+    // ListItemAvatar,
+    // ListItemButton,
+    // ListItemSecondaryAction,
+    // ListItemText,
+    // // MenuItem,
+    // Stack,
+    // // TextField,
     Typography
 } from '@mui/material';
 
@@ -22,55 +20,55 @@ import {
 import OrdersTable from './OrdersTable';
 // import IncomeAreaChart from './IncomeAreaChart';
 import MonthlyBarChart from './MonthlyBarChart';
-import ReportAreaChart from './ReportAreaChart';
-import SalesColumnChart from './SalesColumnChart';
+// import ReportAreaChart from './ReportAreaChart';
+// import SalesColumnChart from './SalesColumnChart';
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 
 // assets
-import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
-import avatar1 from 'assets/images/users/avatar-1.png';
-import avatar2 from 'assets/images/users/avatar-2.png';
-import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
+// import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
+// import avatar1 from 'assets/images/users/avatar-1.png';
+// import avatar2 from 'assets/images/users/avatar-2.png';
+// import avatar3 from 'assets/images/users/avatar-3.png';
+// import avatar4 from 'assets/images/users/avatar-4.png';
 
 // avatar style
-const avatarSX = {
-    width: 36,
-    height: 36,
-    fontSize: '1rem'
-};
+// const avatarSX = {
+//     width: 36,
+//     height: 36,
+//     fontSize: '1rem'
+// };
 
-// action style
-const actionSX = {
-    mt: 0.75,
-    ml: 1,
-    top: 'auto',
-    right: 'auto',
-    alignSelf: 'flex-start',
-    transform: 'none'
-};
+// // action style
+// const actionSX = {
+//     mt: 0.75,
+//     ml: 1,
+//     top: 'auto',
+//     right: 'auto',
+//     alignSelf: 'flex-start',
+//     transform: 'none'
+// };
 
 // sales report status
-const status = [
-    {
-        value: 'today',
-        label: 'Today'
-    },
-    {
-        value: 'month',
-        label: 'This Month'
-    },
-    {
-        value: 'year',
-        label: 'This Year'
-    }
-];
+// const status = [
+//     {
+//         value: 'today',
+//         label: 'Today'
+//     },
+//     {
+//         value: 'month',
+//         label: 'This Month'
+//     },
+//     {
+//         value: 'year',
+//         label: 'This Year'
+//     }
+// ];
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
-    const [value, setValue] = useState('today');
+    // const [value, setValue] = useState('today');
     // const [slot, setSlot] = useState('week');
 
     return (
@@ -86,10 +84,10 @@ const DashboardDefault = () => {
                 <AnalyticEcommerce title="Total Cases" count="10579143681" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Order" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
+                <AnalyticEcommerce title="Total Vaccine" count="188,800"  extra="1,943" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Sales" count="$35,078" percentage={27.4} isLoss color="warning" extra="$20,395" />
+                <AnalyticEcommerce title="Total Bed space" count="935,878" />
             </Grid>
 
             <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
@@ -142,7 +140,7 @@ const DashboardDefault = () => {
             <Grid item xs={12} md={7} lg={8}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h5">Recent Orders</Typography>
+                        <Typography variant="h5">Country data</Typography>
                     </Grid>
                     <Grid item />
                 </Grid>
@@ -150,7 +148,7 @@ const DashboardDefault = () => {
                     <OrdersTable />
                 </MainCard>
             </Grid>
-            <Grid item xs={12} md={5} lg={4}>
+            {/* <Grid item xs={12} md={5} lg={4}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
                         <Typography variant="h5">Analytics Report</Typography>
@@ -174,11 +172,11 @@ const DashboardDefault = () => {
                     </List>
                     <ReportAreaChart />
                 </MainCard>
-            </Grid>
+            </Grid> */}
 
             {/* row 4 */}
             <Grid item xs={12} md={7} lg={8}>
-                <Grid container alignItems="center" justifyContent="space-between">
+                {/* <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
                         <Typography variant="h5">Sales Report</Typography>
                     </Grid>
@@ -198,8 +196,8 @@ const DashboardDefault = () => {
                             ))}
                         </TextField>
                     </Grid>
-                </Grid>
-                <MainCard sx={{ mt: 1.75 }}>
+                </Grid> */}
+                {/* <MainCard sx={{ mt: 1.75 }}>
                     <Stack spacing={1.5} sx={{ mb: -12 }}>
                         <Typography variant="h6" color="secondary">
                             Net Profit
@@ -207,16 +205,16 @@ const DashboardDefault = () => {
                         <Typography variant="h4">$1560</Typography>
                     </Stack>
                     <SalesColumnChart />
-                </MainCard>
+                </MainCard> */}
             </Grid>
             <Grid item xs={12} md={5} lg={4}>
-                <Grid container alignItems="center" justifyContent="space-between">
+                {/* <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
                         <Typography variant="h5">Transaction History</Typography>
                     </Grid>
                     <Grid item />
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false}>
+                </Grid> */}
+                {/* <MainCard sx={{ mt: 2 }} content={false}>
                     <List
                         component="nav"
                         sx={{
@@ -302,8 +300,8 @@ const DashboardDefault = () => {
                             </ListItemSecondaryAction>
                         </ListItemButton>
                     </List>
-                </MainCard>
-                <MainCard sx={{ mt: 2 }}>
+                </MainCard> */}
+                {/* <MainCard sx={{ mt: 2 }}>
                     <Stack spacing={3}>
                         <Grid container justifyContent="space-between" alignItems="center">
                             <Grid item>
@@ -329,7 +327,7 @@ const DashboardDefault = () => {
                             Need Help?
                         </Button>
                     </Stack>
-                </MainCard>
+                </MainCard> */}
             </Grid>
         </Grid>
     );
