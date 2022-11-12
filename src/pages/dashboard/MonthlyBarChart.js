@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Axios from 'axios'
 // material-ui
 import { useTheme } from '@mui/material/styles';
 
@@ -34,7 +33,7 @@ const barChartOptions = {
         }
     },
     yaxis: {
-        show: false
+        show: true
     },
     grid: {
         show: false
@@ -56,13 +55,17 @@ const MonthlyBarChart = () => {
     ]);
   
     const getYearlyCaseCount = async() =>{
-        const {data} = await Axios.get('https://seun-covid.herokuapp.com/api/v1/corona/yearlyCaseCount')
-        if(data.length){
-            const yearlyCases = data.map(yearlyCase=>Number(yearlyCase.total_cases))
-            console.log('yearlyCases',yearlyCases,data)
-            const reversed = yearlyCases.reverse()
-            setSeries([{data: reversed}])
-        }
+        return fetch('http://seun-covid.herokuapp.com/api/v1/corona/yearlyCaseCount')
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.length){
+                const yearlyCases = data.map(yearlyCase=>Number(yearlyCase.total_cases))
+                console.log('yearlyCases',yearlyCases,data)
+                const reversed = yearlyCases.reverse()
+                setSeries([{data: reversed}])
+            }
+        });
+      
        
     }
 

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import Axios from 'axios'
 import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
@@ -131,12 +130,14 @@ export default function OrderTable({searchTerm}) {
     return setCurrentPage(data.selected)
   }
     const getYearlyCaseCount = async() =>{
-        const {data} = await Axios.get('https://seun-covid.herokuapp.com/api/v1/countries/')
-        if(data.length){
-            const allCountries = data.map(({country,population})=>createData(country, 438574, population, 2, 87))
-            setCountryData(allCountries)
-        }
-        console.log('data',data)
+        return fetch('https://seun-covid.herokuapp.com/api/v1/countries/')
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.length){
+                const allCountries = data.map(({country,population})=>createData(country, 438574, population, 2, 87))
+                setCountryData(allCountries)
+            }
+        })
        
     }
 

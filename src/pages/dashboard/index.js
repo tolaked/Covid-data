@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios'
+import React, { useState, useEffect} from 'react';
 import {
     Grid,
     Typography, InputAdornment, OutlinedInput
@@ -16,26 +15,33 @@ const DashboardDefault = () => {
     const [totalCases, setTotalCases] = useState(0)
     const [searchTerm, setSearchTerm] = useState('')
 
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    }
-
+   
     const getTotalDeaths = async() =>{
-        const {data} = await axios.get('https://seun-covid.herokuapp.com/api/v1/corona/sumTotalDeaths')
-        if(data.length) setDeaths(data[0].total)
+       return fetch('https://seun-covid.herokuapp.com/api/v1/corona/sumTotalDeaths')
+  .then((response) => response.json())
+  .then((data) => {
+    if(data.length) setDeaths(data[0].total)
+  });
+        // const {data} = await axios.get('https://seun-covid.herokuapp.com/api/v1/corona/sumTotalDeaths')
+        // if(data.length) setDeaths(data[0].total)
        
     }
 
     const getTotalCases = async() =>{
-        const {data} = await axios.get('https://seun-covid.herokuapp.com/api/v1/corona/sumTotalCases')
-        if(data.length) setTotalCases(data[0].total)
+        return fetch('https://seun-covid.herokuapp.com/api/v1/corona/sumTotalCases')
+        .then((response) => response.json())
+        .then((data) => {
+            setTotalCases(data[0].total)
+        });
+        // const {data} = await axios.get('https://seun-covid.herokuapp.com/api/v1/corona/sumTotalCases')
+        // if(data.length) setTotalCases(data[0].total)
     }
 
     useEffect(()=>{
         getTotalDeaths()
         getTotalCases()
     },[])
-  
+  console.log(deaths,totalCases)
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             {/* row 1 */}
@@ -43,10 +49,10 @@ const DashboardDefault = () => {
                 <Typography variant="h5">Dashboard</Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Deaths" count={String(numberWithCommas(deaths)) || 0}/>
+                <AnalyticEcommerce title="Total Deaths" count={'4647484474'}/>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Cases" count={String(numberWithCommas(totalCases)) || 0} />
+                <AnalyticEcommerce title="Total Cases" count={'46664474'}/>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
                 <AnalyticEcommerce title="Total Vaccine" count="188,800"  extra="1,943" />
