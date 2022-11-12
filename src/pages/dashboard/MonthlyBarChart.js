@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import Axios from 'axios'
 // material-ui
 import { useTheme } from '@mui/material/styles';
 
@@ -49,11 +49,26 @@ const MonthlyBarChart = () => {
     const { primary, secondary } = theme.palette.text;
     const info = theme.palette.info.light;
 
-    const [series] = useState([
+    const [series, setSeries] = useState([
         {
-            data: [28000, 12589, 7670]
+            data: [7635290647, 67085505873, 66412666583]
         }
     ]);
+  
+    const getYearlyCaseCount = async() =>{
+        const {data} = await Axios.get('https://seun-covid.herokuapp.com/api/v1/corona/yearlyCaseCount')
+        if(data.length){
+            const yearlyCases = data.map(yearlyCase=>Number(yearlyCase.total_cases))
+            console.log('yearlyCases',yearlyCases,data)
+            const reversed = yearlyCases.reverse()
+            setSeries([{data: reversed}])
+        }
+       
+    }
+
+    useEffect(()=>{
+        getYearlyCaseCount()
+    },[])
 
     const [options, setOptions] = useState(barChartOptions);
 
@@ -76,9 +91,14 @@ const MonthlyBarChart = () => {
     }, [primary, info, secondary]);
 
     return (
-        <div id="chart">
+        <>
+      { series.length ?
+       <div id="chart">
             <ReactApexChart options={options} series={series} type="bar" height={365} />
         </div>
+        : ''
+    }
+    </>
     );
 };
 

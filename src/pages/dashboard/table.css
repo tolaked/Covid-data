@@ -1,0 +1,29 @@
+.pagination-line{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding:10px 20px
+}
+.pagination-line ul{
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+.pagination-line ul li{
+    padding: 3px 10px;
+    color: #0092e0;
+    cursor: pointer;
+}
+
+.pagination-line .active{
+    background: #0092e0;
+    color: #fff
+}
+.css-1hmt0ej-MuiTableContainer-root th{
+    text-align: left !important;
+}
+
+.css-1hmt0ej-MuiTableContainer-root td{
+    text-align: left !important;
+}

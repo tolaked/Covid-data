@@ -1,21 +1,21 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Axios from 'axios'
+import ReactPaginate from "react-paginate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
+import './table.css'
 
 // material-ui
-import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 // third-party
 import NumberFormat from 'react-number-format';
 
-// project import
-import Dot from 'components/@extended/Dot';
 
 function createData(country, totalCases, population, lifeExpectancy, medianAge) {
     return { country, totalCases, population, lifeExpectancy, medianAge };
 }
-
-const rows = [createData('Nigeria', 438574, 125000, 2, 87), createData('France', 76885, 345000, 8, 40699)];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -50,7 +50,7 @@ const headCells = [
         id: 'country',
         align: 'center',
         disablePadding: false,
-        label: 'country'
+        label: 'Country'
     },
     {
         id: 'totalCases',
@@ -81,6 +81,7 @@ const headCells = [
 // ==============================|| ORDER TABLE - HEADER ||============================== //
 
 function OrderTableHead({ order, orderBy }) {
+   
     return (
         <TableHead>
             <TableRow>
@@ -104,50 +105,44 @@ OrderTableHead.propTypes = {
     orderBy: PropTypes.string
 };
 
-// ==============================|| ORDER TABLE - STATUS ||============================== //
 
-const OrderStatus = ({ status }) => {
-    let color;
-    let title;
-
-    switch (status) {
-        case 0:
-            color = 'warning';
-            title = 'Pending';
-            break;
-        case 1:
-            color = 'success';
-            title = 'Approved';
-            break;
-        case 2:
-            color = 'error';
-            title = 'Rejected';
-            break;
-        default:
-            color = 'primary';
-            title = 'None';
-    }
-
-    return (
-        <Stack direction="row" spacing={1} alignItems="center">
-            <Dot color={color} />
-            <Typography>{title}</Typography>
-        </Stack>
-    );
-};
-
-OrderStatus.propTypes = {
-    status: PropTypes.number
-};
 
 // ==============================|| ORDER TABLE ||============================== //
 
-export default function OrderTable() {
+export default function OrderTable({searchTerm}) {
     const [order] = useState('asc');
     const [orderBy] = useState('trackingNo');
     const [selected] = useState([]);
 
     const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
+    const [countryData, setCountryData] = useState([])
+    const [currentPage, setCurrentPage] = useState(0)
+
+    const filteredItems = countryData?.filter((ele) =>
+    ele.country
+      ?.toLocaleLowerCase()
+      .includes(searchTerm.toLocaleLowerCase())
+  );
+
+  const pageSize = 15;
+
+  const verificationsCount = Math.ceil(filteredItems.length / pageSize);
+  const handleNext=(data)=>{
+    return setCurrentPage(data.selected)
+  }
+    const getYearlyCaseCount = async() =>{
+        const {data} = await Axios.get('https://seun-covid.herokuapp.com/api/v1/countries/')
+        if(data.length){
+            const allCountries = data.map(({country,population})=>createData(country, 438574, population, 2, 87))
+            setCountryData(allCountries)
+        }
+        console.log('data',data)
+       
+    }
+
+    useEffect(()=>{
+        getYearlyCaseCount()
+    },[])
 
     return (
         <Box>
@@ -174,7 +169,9 @@ export default function OrderTable() {
                 >
                     <OrderTableHead order={order} orderBy={orderBy} />
                     <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
+                        {filteredItems.length > 0
+                  && stableSort(filteredItems, getComparator(order, orderBy))
+                      .slice(currentPage * pageSize, (currentPage + 1) * pageSize).map((row, index) => {
                             const isItemSelected = isSelected(row.trackingNo);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -188,15 +185,14 @@ export default function OrderTable() {
                                     key={row.country}
                                     selected={isItemSelected}
                                 >
-                                    <TableCell component="th" id={labelId} scope="row" align="center">
-                                        <Link color="secondary" component={RouterLink} to="">
+                                    <TableCell id={labelId} scope="row" align="center">
                                             {row.country}
-                                        </Link>
                                     </TableCell>
                                     <TableCell align="center">
                                         <NumberFormat value={row.totalCases} displayType="text" thousandSeparator />
                                     </TableCell>
-                                    <TableCell align="center">{row.population}</TableCell>
+                                    <TableCell align="center">
+                                    <NumberFormat value={row.population} displayType="text" thousandSeparator /></TableCell>
                                     <TableCell align="center">
                                         <Typography>{row.lifeExpectancy}</Typography>
                                     </TableCell>
@@ -206,6 +202,39 @@ export default function OrderTable() {
                         })}
                     </TableBody>
                 </Table>
+                <div className="pagination-line">
+                    <p>
+                Showing{" "}
+                {
+                  filteredItems.slice(
+                    currentPage * pageSize,
+                    (currentPage + 1) * pageSize
+                  ).length
+                }{" "}
+                of {filteredItems.length} of countries
+              </p>
+                <ReactPaginate
+                    previousLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleLeft}
+                      style={{ fontSize: "15px" }}
+                    />}
+                    nextLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleRight}
+                      style={{ fontSize: "15px" }}
+                    />}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={verificationsCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={(e) => handleNext(e)}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  /> 
+                  </div>
             </TableContainer>
         </Box>
     );
