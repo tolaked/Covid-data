@@ -16,7 +16,7 @@ const barChartOptions = {
     },
     plotOptions: {
         bar: {
-            columnWidth: '45%',
+            columnWidth: '35%',
             borderRadius: 4
         }
     },
@@ -24,7 +24,7 @@ const barChartOptions = {
         enabled: false
     },
     xaxis: {
-        categories: ['2020', '2021', '2022'],
+        categories: ['Europe', 'Asia', "North America", "South America", "Africa", "Oceania"],
         axisBorder: {
             show: false
         },
@@ -42,7 +42,7 @@ const barChartOptions = {
 
 // ==============================|| MONTHLY BAR CHART ||============================== //
 
-const MonthlyBarChart = () => {
+const ContinentCases = () => {
     const theme = useTheme();
 
     const { primary, secondary } = theme.palette.text;
@@ -55,13 +55,12 @@ const MonthlyBarChart = () => {
     ]);
   
     const getYearlyCaseCount = async() =>{
-        return fetch('http://seun-covid.herokuapp.com/api/v1/corona/yearlyCaseCount')
+        return fetch('http://seun-covid.herokuapp.com/api/v1/corona/regionWithHighestCases')
         .then((response) => response.json())
         .then((data) => {
             if(data.length){
-                const yearlyCases = data.map(yearlyCase=>Number(yearlyCase.total_cases))
-                const reversed = yearlyCases.reverse()
-                setSeries([{data: reversed, name: 'Cases'}])
+                const cases = data.map(regionCase=>Number(regionCase.sum_new_cases))
+                setSeries([{data: cases,name: 'Total cases'}])
             }
         });
       
@@ -104,4 +103,4 @@ const MonthlyBarChart = () => {
     );
 };
 
-export default MonthlyBarChart;
+export default ContinentCases;

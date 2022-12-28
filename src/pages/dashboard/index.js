@@ -8,12 +8,15 @@ import OrdersTable from './OrdersTable';
 import MonthlyBarChart from './MonthlyBarChart';
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
+import ContinentCases from './ContinentCases';
+import CasesVersusDeath from './CasesVsDeath';
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
     const [deaths, setDeaths] = useState(0)
     const [totalCases, setTotalCases] = useState(0)
     const [searchTerm, setSearchTerm] = useState('')
+    const [currentPage, setCurrentPage] = useState(0)
 
    
     const getTotalDeaths = async() =>{
@@ -76,6 +79,39 @@ const DashboardDefault = () => {
             {/* row 2 */}
             <Grid item xs={12} md={7} lg={8}>
             </Grid>
+            <Grid item xs={12} md={7} lg={8}>
+                <Grid container alignItems="center" justifyContent="space-between">
+                    <Grid item>
+                        <Typography variant="h5">Cases by region</Typography>
+                    </Grid>
+                    <Grid item />
+                </Grid>
+                <MainCard sx={{ mt: 2 }} content={false}>
+                    <ContinentCases />
+                </MainCard>
+            </Grid>
+            {/*  */}
+             <Grid item xs={12} md={7} lg={8}>
+                <Grid container alignItems="center" justifyContent="space-between">
+                    <Grid item>
+                        <Typography variant="h5">Sales Report</Typography>
+                    </Grid>
+                    
+                </Grid>
+                <MainCard sx={{ mt: 1.75 }}>
+                    {/* <Stack spacing={1.5} sx={{ mb: -12 }}>
+                        <Typography variant="h6" color="secondary">
+                            Net Profit
+                        </Typography>
+                        <Typography variant="h4">$1560</Typography>
+                    </Stack> */}
+                    <CasesVersusDeath />
+                </MainCard>
+            </Grid>
+            
+           
+
+            
 
             {/* row 3 */}
             <Grid item xs={12} md={7} lg={12}>
@@ -88,7 +124,7 @@ const DashboardDefault = () => {
                     value={searchTerm}
                     onChange={(e)=>{
                         setSearchTerm(e.target.value)
-                        console.log('eee',e.target.value)
+                        setCurrentPage(0)
                     }}
                 size="small"
                 id="header-search"
@@ -107,7 +143,7 @@ const DashboardDefault = () => {
                     </Grid>
                 </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <OrdersTable searchTerm={searchTerm}/>
+                    <OrdersTable searchTerm={searchTerm} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
                 </MainCard>
             </Grid>
            
